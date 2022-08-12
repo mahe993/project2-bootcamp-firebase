@@ -3,10 +3,10 @@
   --main-font-color: black;
 }
 
-* {
+/* * {
   background-color: var(--main-bg-color);
   color: var(--main-font-color);
-}
+} */
 
 body {
   box-sizing: border-box;
