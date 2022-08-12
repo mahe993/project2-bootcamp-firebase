@@ -6,8 +6,7 @@ const LoginPage = (props) => {
   return (
     <>
       <h1>Hello login</h1>
-      <LoginForm />
-      <button onClick={props.toggleLoginStatus}>Login</button>
+      <LoginForm toggleLoginStatus={props.toggleLoginStatus} />
       <ToggleDarkMode />
     </>
   );
