@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase } from "firebase/database";
+import { getDatabase, ref, set } from "firebase/database";
 import { getStorage } from "firebase/storage";
 import { getAuth } from "firebase/auth";
 
@@ -17,3 +17,10 @@ const app = initializeApp(firebaseConfig);
 export const database = getDatabase(app);
 export const storage = getStorage(app);
 export const auth = getAuth(app);
+
+export const writeUserData = (userId, email, accountBalance) => {
+  set(ref(database, "users/" + userId), {
+    username: email,
+    accountBalance: accountBalance,
+  });
+};

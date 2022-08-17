@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -21,7 +21,7 @@ const RegisterDialog = (props) => {
       onClose={handleClose}
       scroll="paper"
     >
-      <DialogTitle id="scroll-dialog-title">REGISTER</DialogTitle>
+      <DialogTitle id="scroll-dialog-title">REGISTRATION</DialogTitle>
       <DialogContent dividers>
         <DialogContentText id="scroll-dialog-description" tabIndex={-1}>
           No such email found.

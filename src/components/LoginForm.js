@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "@emotion/styled";
 import { Alert, InputAdornment, TextField } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { auth } from "../firebase";
+import { auth, writeUserData } from "../firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -53,6 +53,7 @@ const LoginForm = (props) => {
         //Signed in
         console.log("logged in successfully:", userCredential);
         //Navigate to home page
+        props.toggleLoginStatus();
       })
       .catch((error) => {
         console.log("Firebase sign in error:", error.code);
@@ -74,7 +75,9 @@ const LoginForm = (props) => {
     )
       .then((userCredential) => {
         // Signed in
-        console.log("registration successful:", userCredential);
+        console.log("registration successful:", userCredential.user.uid);
+        // Add user to realtime database
+        writeUserData(userCredential.user.uid, getValues("email"), 0);
         //open Snackbar saying success and to relog
         setOpenSnackBar(true);
         //signout
@@ -92,7 +95,14 @@ const LoginForm = (props) => {
           });
       })
       .catch((error) => {
-        console.log("registration error:", error.message);
+        console.log("registration error:", error.code);
+        if (error.code === "auth/invalid-email") {
+          setError("email", {
+            type: "custom",
+            message: "Email invalid. Try another.",
+          });
+          setOpenRegisterDialog(false);
+        }
       });
   };
 

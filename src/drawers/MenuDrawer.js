@@ -1,29 +1,73 @@
-import { Drawer } from "@mui/material";
+/* eslint-disable default-case */
+import { Drawer, ListItem, ListItemText } from "@mui/material";
 import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import ToggleDarkMode from "../components/ToggleDarkMode";
+import { auth } from "../firebase";
+import { signOut } from "firebase/auth";
 
 const MenuDrawer = (props) => {
-  const [openDrawer, setOpenDrawer] = useState(false);
+  const [openMenuDrawer, setOpenMenuDrawer] = useState(false);
+  const DRAWER_ITEMS = ["Account", "Top-Up", "Logout"];
+
+  const handleClick = (page) => {
+    switch (page) {
+      case "Account":
+        console.log("account page");
+        //if !user, open dialog to prompt sign in, otherwise nav to account page
+        break;
+
+      case "Top-Up":
+        console.log("topup page");
+        //if !user, open dialog to prompt sign in, otherwise nav to topup page
+        break;
+
+      case "Logout":
+        console.log("logout");
+        //if !user, Logout button should be disabled
+        //sign out
+        signOut(auth)
+          .then(() => {
+            console.log("signout successful");
+            //navigate back to unprotected page/ home page
+          })
+          .catch((error) => {
+            // An error happened.
+            console.log("signout error:", error);
+          });
+        break;
+    }
+  };
 
   return (
     <>
       <MenuIcon
         onClick={() => {
-          setOpenDrawer(true);
+          setOpenMenuDrawer(true);
         }}
       />
       <Drawer
         variant="temporary"
         anchor="right"
-        open={openDrawer}
+        open={openMenuDrawer}
         onClose={() => {
-          setOpenDrawer(false);
+          setOpenMenuDrawer(false);
         }}
       >
         <ToggleDarkMode />
+        {DRAWER_ITEMS.map((x) => (
+          <ListItem
+            key={x}
+            button
+            onClick={() => handleClick(x)}
+            disabled={x === "test"}
+          >
+            <ListItemText primary={x} />
+          </ListItem>
+        ))}
       </Drawer>
     </>
   );
 };
+
 export default MenuDrawer;
