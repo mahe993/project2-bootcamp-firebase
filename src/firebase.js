@@ -17,10 +17,3 @@ const app = initializeApp(firebaseConfig);
 export const database = getDatabase(app);
 export const storage = getStorage(app);
 export const auth = getAuth(app);
-
-export const writeUserData = (userId, email, accountBalance) => {
-  set(ref(database, "users/" + userId), {
-    username: email,
-    accountBalance: accountBalance,
-  });
-};

@@ -7,10 +7,9 @@ const TopUpPage = () => {
   const useContext = useUserContext();
 
   const handleClick = () => {
-    const updates = {};
-    updates["/users/" + useContext.userId + "/accountBalance"] =
-      useContext.accountBalance + 100;
-    update(ref(database), updates);
+    update(ref(database, "users/" + useContext.userId), {
+      accountBalance: useContext.accountBalance + 100,
+    });
   };
 
   return (

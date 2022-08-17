@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import styled from "@emotion/styled";
 import { Alert, InputAdornment, TextField } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { auth, writeUserData } from "../firebase";
+import { auth, database } from "../firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -13,6 +13,7 @@ import {
 } from "firebase/auth";
 import RegisterDialog from "./RegisterDialog";
 import Snackbar from "@mui/material/Snackbar";
+import { ref, update } from "firebase/database";
 
 const LoginForm = (props) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -52,6 +53,10 @@ const LoginForm = (props) => {
       .then((userCredential) => {
         //Signed in
         console.log("logged in successfully:", userCredential);
+        //Add user in firebase realtime db
+        update(ref(database, "users/" + userCredential.user.uid), {
+          username: userCredential.user.email,
+        });
         //Navigate to home page
         props.toggleLoginStatus();
       })
@@ -75,9 +80,6 @@ const LoginForm = (props) => {
     )
       .then((userCredential) => {
         // Signed in
-        console.log("registration successful:", userCredential.user.uid);
-        // Add user to realtime database
-        writeUserData(userCredential.user.uid, getValues("email"), 0);
         //open Snackbar saying success and to relog
         setOpenSnackBar(true);
         //signout
