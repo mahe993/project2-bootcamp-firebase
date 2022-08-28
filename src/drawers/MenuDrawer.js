@@ -1,41 +1,46 @@
 /* eslint-disable default-case */
-import { Drawer, ListItem, ListItemText } from "@mui/material";
+import { Box, Drawer, ListItem, ListItemText } from "@mui/material";
 import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import ToggleDarkMode from "../components/ToggleDarkMode";
 import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
 import { useUserContext } from "../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const MenuDrawer = (props) => {
   const [openMenuDrawer, setOpenMenuDrawer] = useState(false);
   const DRAWER_ITEMS = ["Account", "Top-Up", "Wallet", "Logout"];
   const userContext = useUserContext();
+  const navigate = useNavigate();
 
   const handleClick = (page) => {
     switch (page) {
       case "Account":
-        console.log("account page");
+        navigate("/account");
+        setOpenMenuDrawer(false);
         //if !user, open dialog to prompt sign in, otherwise nav to account page
         break;
 
       case "Top-Up":
-        console.log("topup page");
         //if !user, open dialog to prompt sign in, otherwise nav to topup page
+        navigate("/topup");
+        setOpenMenuDrawer(false);
         break;
 
       case "Wallet":
-        console.log("Wallet page");
+        navigate("/wallet");
+        setOpenMenuDrawer(false);
         //if !user, open dialog to prompt sign in, otherwise nav to wallet page
         break;
 
       case "Logout":
-        console.log("logout");
         //if !user, Logout button should be disabled
         //sign out
         signOut(auth)
           .then(() => {
             console.log("signout successful");
+            setOpenMenuDrawer(false);
             //navigate back to unprotected page/ home page
           })
           .catch((error) => {
@@ -61,7 +66,9 @@ const MenuDrawer = (props) => {
           setOpenMenuDrawer(false);
         }}
       >
-        <ToggleDarkMode />
+        <Box width={"100%"} display={"flex"} justifyContent={"center"} mt={1}>
+          <ToggleDarkMode />
+        </Box>
         {DRAWER_ITEMS.map((x) => (
           <ListItem
             key={x}

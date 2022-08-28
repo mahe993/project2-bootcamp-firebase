@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "@emotion/styled";
-import { Alert, InputAdornment, TextField } from "@mui/material";
+import { Alert, Box, InputAdornment, TextField } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -14,6 +14,7 @@ import {
 import RegisterDialog from "./RegisterDialog";
 import Snackbar from "@mui/material/Snackbar";
 import { ref, update } from "firebase/database";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = (props) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -28,6 +29,8 @@ const LoginForm = (props) => {
     setError,
     reset,
   } = useForm({ mode: "onBlur" });
+
+  const navigate = useNavigate();
 
   //register email input field
   const { ref: emailRef, ...emailRegProps } = register("email", {
@@ -58,7 +61,7 @@ const LoginForm = (props) => {
           email: userCredential.user.email,
         });
         //Navigate to home page
-        props.toggleLoginStatus();
+        navigate("/");
       })
       .catch((error) => {
         console.log("Firebase sign in error:", error.code);
@@ -115,56 +118,72 @@ const LoginForm = (props) => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <StyledTextField
-          error={errors.email ? true : false}
-          type="text"
-          label="E-Mail"
-          helperText={errors.email && errors.email.message}
-          variant="standard"
-          placeholder="xxx@xxxmail.com"
-          focused
-          autoComplete="off"
-          inputRef={emailRef}
-          {...emailRegProps}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="start">
-                <AccountCircle fontSize="small" />
-              </InputAdornment>
-            ),
-          }}
-        />
-        <StyledTextField
-          error={errors.password ? true : false}
-          type={showPassword ? "text" : "password"}
-          label="Password"
-          helperText={errors.password && errors.password.message}
-          variant="standard"
-          placeholder="QWEqwe123!@#"
-          focused
-          autoComplete="off"
-          name="password"
-          inputRef={passwordRef}
-          {...passwordRegProps}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="start">
-                {showPassword ? (
-                  <VisibilityIcon
-                    onClick={toggleShowPassword}
-                    fontSize="small"
-                  />
-                ) : (
-                  <VisibilityOffIcon
-                    onClick={toggleShowPassword}
-                    fontSize="small"
-                  />
-                )}
-              </InputAdornment>
-            ),
-          }}
-        />
-        <StyledTextField type="submit" value="Login/Signup" />
+        <Box
+          display={"flex"}
+          maxWidth={"100vw"}
+          width={"100vw"}
+          flexDirection={"column"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          gap={5}
+        >
+          <Box>
+            <StyledTextField
+              error={errors.email ? true : false}
+              type="text"
+              label="E-Mail"
+              helperText={errors.email && errors.email.message}
+              variant="standard"
+              placeholder="xxx@xxxmail.com"
+              focused
+              autoComplete="off"
+              inputRef={emailRef}
+              {...emailRegProps}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="start">
+                    <AccountCircle fontSize="small" />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Box>
+          <Box>
+            <StyledTextField
+              error={errors.password ? true : false}
+              type={showPassword ? "text" : "password"}
+              label="Password"
+              helperText={errors.password && errors.password.message}
+              variant="standard"
+              placeholder="QWEqwe123!@#"
+              focused
+              autoComplete="off"
+              name="password"
+              inputRef={passwordRef}
+              {...passwordRegProps}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="start">
+                    {showPassword ? (
+                      <VisibilityIcon
+                        onClick={toggleShowPassword}
+                        fontSize="small"
+                      />
+                    ) : (
+                      <VisibilityOffIcon
+                        onClick={toggleShowPassword}
+                        fontSize="small"
+                      />
+                    )}
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Box>
+          <Box>
+            <StyledTextField type="submit" value="Login/Signup" />
+          </Box>
+        </Box>
       </form>
       <RegisterDialog
         openRegisterDialog={openRegisterDialog}

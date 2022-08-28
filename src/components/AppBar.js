@@ -1,10 +1,13 @@
-import { Avatar, Box } from "@mui/material";
+import { Avatar, Box, Link } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../contexts/UserContext";
 import MenuDrawer from "../drawers/MenuDrawer";
 
 const AppBar = () => {
   const userContext = useUserContext();
+  const navigate = useNavigate();
+
   return (
     <Box width={"100vw"} height={"10vh"} p={1} display={"flex"}>
       <Box flexGrow={1} display={"flex"}>
@@ -27,7 +30,17 @@ const AppBar = () => {
               <Box>SGD$ {userContext.accountBalance}</Box>
             </>
           ) : (
-            <Box>Login</Box>
+            <Box>
+              <Link
+                component="button"
+                variant="subtitle1"
+                onClick={() => {
+                  navigate("/login");
+                }}
+              >
+                Login/Signup
+              </Link>
+            </Box>
           )}
         </Box>
       </Box>
