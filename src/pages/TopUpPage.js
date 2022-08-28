@@ -1,6 +1,5 @@
 import { ref, update } from "firebase/database";
 import React from "react";
-import { currencyExchange } from "../apis/exchangeRateApi";
 import { useUserContext } from "../contexts/UserContext";
 import { database } from "../firebase";
 

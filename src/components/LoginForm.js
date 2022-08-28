@@ -55,7 +55,7 @@ const LoginForm = (props) => {
         console.log("logged in successfully:", userCredential);
         //Add user in firebase realtime db
         update(ref(database, "users/" + userCredential.user.uid), {
-          username: userCredential.user.email,
+          email: userCredential.user.email,
         });
         //Navigate to home page
         props.toggleLoginStatus();

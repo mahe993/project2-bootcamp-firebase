@@ -10,6 +10,7 @@ export const UserContextProvider = (props) => {
   const [userInfo, setUserInfo] = useState({
     userId: null,
     username: null,
+    email: null,
     accountBalance: null,
   });
 
@@ -17,7 +18,6 @@ export const UserContextProvider = (props) => {
     if (user && userInfo.userId === null) {
       setUserInfo({ ...userInfo, userId: user.uid });
     } else if (!user && userInfo.userId !== null) {
-      console.log("testing");
       setUserInfo({ ...userInfo, userId: null });
     }
   });
@@ -31,17 +31,16 @@ export const UserContextProvider = (props) => {
       prevSnapshot = snapshot.val();
       setUserInfo({
         ...userInfo,
-        username: snapshot.val().username,
+        email: snapshot.val().email,
         accountBalance: snapshot.val().accountBalance,
       });
     }
   });
 
-  const value = userInfo;
-  console.log(value);
-
   return (
-    <UserContext.Provider value={value}>{props.children}</UserContext.Provider>
+    <UserContext.Provider value={userInfo}>
+      {props.children}
+    </UserContext.Provider>
   );
 };
 

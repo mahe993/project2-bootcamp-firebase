@@ -1,13 +1,16 @@
 import { Grid } from "@mui/material";
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import MenuDrawer from "../drawers/MenuDrawer";
+import AppBar from "../components/AppBar";
+import { UserContextProvider } from "../contexts/UserContext";
 import HomePage from "./HomePage";
 
 const MainPage = (props) => {
   return (
     <Grid container>
-      <MenuDrawer />
+      <UserContextProvider>
+        <AppBar />
+      </UserContextProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />

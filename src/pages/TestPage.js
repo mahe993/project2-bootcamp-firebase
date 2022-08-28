@@ -8,7 +8,7 @@ const TestPage = () => {
   return (
     <>
       <p>userID: {userContext.userId}</p>
-      <p>email: {userContext.username}</p>
+      <p>email: {userContext.email}</p>
       <p>Account Balance: {userContext.accountBalance}</p>
       <TopUpPage />
     </>
