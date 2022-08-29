@@ -4,12 +4,19 @@ import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../contexts/UserContext";
 import MenuDrawer from "../drawers/MenuDrawer";
 
-const AppBar = () => {
+const AppBar = (props) => {
   const userContext = useUserContext();
   const navigate = useNavigate();
 
   return (
-    <Box width={"100vw"} height={"10vh"} p={1} display={"flex"}>
+    <Box
+      width={"95%"}
+      height={"15vh"}
+      p={1}
+      display={"flex"}
+      mr={"auto"}
+      ml={"auto"}
+    >
       <Box flexGrow={1} display={"flex"}>
         <Box display={"flex"} alignItems={"center"}>
           <Avatar src="/broken-image.jpg" sx={{ width: 50, height: 50 }} />

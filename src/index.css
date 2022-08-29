@@ -8,8 +8,11 @@
   color: var(--main-font-color);
 } */
 
-body {
+* {
   box-sizing: border-box;
+}
+
+body {
   margin: 0;
   padding: 0;
   width: 100vw;

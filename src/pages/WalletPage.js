@@ -7,8 +7,9 @@ const WalletPage = () => {
   const navigate = useNavigate();
 
   if (!userContext.email) {
-    navigate("/");
+    return navigate("/");
   }
+
   return <div>WalletPage</div>;
 };
 

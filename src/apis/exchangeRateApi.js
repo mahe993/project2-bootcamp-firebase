@@ -19,6 +19,7 @@ export const currencyExchange = async (fromCurrency, toCurrency) => {
     console.log(
       res.data["Realtime Currency Exchange Rate"]["5. Exchange Rate"]
     );
+    return res.data["Realtime Currency Exchange Rate"]["5. Exchange Rate"];
   } catch (err) {
     console.log(err);
   }

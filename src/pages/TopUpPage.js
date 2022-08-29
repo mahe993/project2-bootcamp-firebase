@@ -9,7 +9,7 @@ const TopUpPage = () => {
   const navigate = useNavigate();
 
   if (!userContext.email) {
-    navigate("/");
+    return navigate("/");
   }
 
   const handleClick = () => {

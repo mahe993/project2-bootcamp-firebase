@@ -54,6 +54,7 @@ const MenuDrawer = (props) => {
   return (
     <>
       <MenuIcon
+        fontSize="large"
         onClick={() => {
           setOpenMenuDrawer(true);
         }}

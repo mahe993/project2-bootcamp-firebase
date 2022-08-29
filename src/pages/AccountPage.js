@@ -7,7 +7,7 @@ const AccountPage = () => {
   const navigate = useNavigate();
 
   if (!userContext.email) {
-    navigate("/");
+    return navigate("/");
   }
 
   return <div>AccountPage</div>;
