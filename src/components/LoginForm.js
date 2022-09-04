@@ -59,6 +59,7 @@ const LoginForm = (props) => {
         //Add user in firebase realtime db
         update(ref(database, "users/" + userCredential.user.uid), {
           email: userCredential.user.email,
+          wallet: { SGD: 0 },
         });
         //Navigate to home page
         navigate("/");

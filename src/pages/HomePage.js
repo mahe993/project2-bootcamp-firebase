@@ -1,5 +1,5 @@
 import { Autocomplete, Box, Button, TextField } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { currencyExchange } from "../apis/exchangeRateApi";
 import { useUserContext } from "../contexts/UserContext";
@@ -7,6 +7,9 @@ import { useUserContext } from "../contexts/UserContext";
 const HomePage = (props) => {
   const navigate = useNavigate();
   const userContext = useUserContext();
+
+  const [disableFields, setDisableFields] = useState(false);
+  const [disableGetRates, setDisableGetRates] = useState(true);
 
   const handleConvurt = async () => {
     console.log(props.states.baseValue, props.states.exchangeValue);
@@ -24,8 +27,10 @@ const HomePage = (props) => {
       props.states.exchangeValue
     );
     const getDate = Date();
-    props.setExchangeRate(exchangeApiData);
+    props.setExchangeRate(Number(exchangeApiData).toFixed(5));
     props.setDate(getDate);
+    setDisableGetRates(false);
+    setDisableFields(true);
   };
 
   const handleGetRates = () => {
@@ -51,6 +56,7 @@ const HomePage = (props) => {
       </Box>
       <Box display={"flex"} justifyContent={"space-between"}>
         <Autocomplete
+          disabled={disableFields}
           size="small"
           sx={{ width: "45%" }}
           onChange={(event, newValue) => {
@@ -87,6 +93,7 @@ const HomePage = (props) => {
           )}
         />
         <Autocomplete
+          disabled={disableFields}
           size="small"
           sx={{ width: 1 / 2 }}
           onChange={(event, newValue) => {
@@ -152,8 +159,25 @@ const HomePage = (props) => {
             {props.states.date}
           </Box>
           <Box alignSelf={"center"} mt={2}>
-            <Button variant="contained" color="error" onClick={handleGetRates}>
+            <Button
+              variant="contained"
+              color="error"
+              disabled={disableGetRates}
+              onClick={handleGetRates}
+            >
               GET RATES
+            </Button>
+          </Box>
+          <Box alignSelf={"center"} mt={2}>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => {
+                setDisableGetRates(true);
+                setDisableFields(false);
+              }}
+            >
+              Convurt Another
             </Button>
           </Box>
         </Box>
@@ -162,11 +186,10 @@ const HomePage = (props) => {
   );
 };
 
-const countries = [
+export const countries = [
   { code: "AU", label: "Australian Dollar", value: "AUD" },
   { code: "CH", label: "Swiss Franc", value: "CHF" },
   { code: "CN", label: "Chinese Yuan", value: "CNY" },
-  { code: "EG", label: "Egyptian Pound", value: "EGP" },
   { code: "GB", label: "Pound Sterling", value: "GBP" },
   { code: "HK", label: "Hong Kong Dollar", value: "HKD" },
   { code: "ID", label: "Indonesian Rupiah", value: "IDR" },

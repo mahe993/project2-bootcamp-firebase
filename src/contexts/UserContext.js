@@ -11,7 +11,6 @@ export const UserContextProvider = (props) => {
     userId: null,
     username: null,
     email: null,
-    accountBalance: 0,
   });
 
   onAuthStateChanged(auth, (user) => {
@@ -22,21 +21,15 @@ export const UserContextProvider = (props) => {
     }
   });
 
-  const userInfoRef = ref(database, "users/" + userInfo.userId);
+  const userInfoRef = ref(database, "users/" + userInfo.userId + "/username");
 
   onValue(userInfoRef, (snapshot) => {
-    console.log(prevSnapshot + "cannot be equal" + snapshot.val());
-    if (snapshot.val().accountBalance !== prevSnapshot.accountBalance) {
+    console.log(snapshot.val());
+    if (snapshot.val() && userInfo.username !== snapshot.val) {
       prevSnapshot = snapshot.val();
       setUserInfo({
         ...userInfo,
-        accountBalance: snapshot.val().accountBalance,
-      });
-    } else if (snapshot.val().username !== prevSnapshot.username) {
-      prevSnapshot = snapshot.val();
-      setUserInfo({
-        ...userInfo,
-        username: snapshot.val().username,
+        username: snapshot.val(),
       });
     }
   });

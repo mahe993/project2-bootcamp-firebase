@@ -41,6 +41,7 @@ const MainPage = () => {
               element={
                 <WalletPage
                   states={{ baseValue, exchangeValue, exchangeRate, date }}
+                  setExchangeRate={setExchangeRate}
                 />
               }
             />

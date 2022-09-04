@@ -28,26 +28,21 @@ const AppBar = (props) => {
           p={0.5}
         >
           {userContext.email ? (
-            <>
-              <Box>
-                {userContext.username
-                  ? userContext.username
-                  : userContext.email}
-              </Box>
-              <Box>SGD$ {userContext.accountBalance}</Box>
-            </>
+            userContext.username ? (
+              userContext.username
+            ) : (
+              userContext.email
+            )
           ) : (
-            <Box>
-              <Link
-                component="button"
-                variant="subtitle1"
-                onClick={() => {
-                  navigate("/login");
-                }}
-              >
-                Login/Signup
-              </Link>
-            </Box>
+            <Link
+              component="button"
+              variant="subtitle1"
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              Login/Signup
+            </Link>
           )}
         </Box>
       </Box>
