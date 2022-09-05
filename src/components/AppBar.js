@@ -19,7 +19,11 @@ const AppBar = (props) => {
     >
       <Box flexGrow={1} display={"flex"}>
         <Box display={"flex"} alignItems={"center"}>
-          <Avatar src="/broken-image.jpg" sx={{ width: 50, height: 50 }} />
+          <Avatar
+            src={props.avatarURL}
+            sx={{ width: 50, height: 50 }}
+            alt="error"
+          />
         </Box>
         <Box
           display={"flex"}
@@ -47,7 +51,7 @@ const AppBar = (props) => {
         </Box>
       </Box>
       <Box display={"flex"} alignItems={"center"}>
-        <MenuDrawer />
+        <MenuDrawer setAvatarURL={props.setAvatarURL} />
       </Box>
     </Box>
   );

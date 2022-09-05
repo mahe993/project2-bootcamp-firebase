@@ -41,6 +41,7 @@ const MenuDrawer = (props) => {
           .then(() => {
             console.log("signout successful");
             setOpenMenuDrawer(false);
+            props.setAvatarURL(null);
             navigate("/");
             //navigate back to unprotected page/ home page
           })

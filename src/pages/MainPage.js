@@ -8,18 +8,20 @@ import LoginPage from "./LoginPage";
 import TopUpPage from "./TopUpPage";
 import AccountPage from "./AccountPage";
 import WalletPage from "./WalletPage";
+import LoginForm from "../components/LoginForm";
 
 const MainPage = () => {
   const [baseValue, setBaseValue] = useState();
   const [exchangeValue, setExchangeValue] = useState();
   const [exchangeRate, setExchangeRate] = useState();
   const [date, setDate] = useState();
+  const [avatarURL, setAvatarURL] = useState();
 
   return (
     <Grid container>
       <BrowserRouter>
         <UserContextProvider>
-          <AppBar />
+          <AppBar avatarURL={avatarURL} setAvatarURL={setAvatarURL} />
           <Routes>
             <Route
               path="/"
@@ -33,9 +35,22 @@ const MainPage = () => {
                 />
               }
             />
-            <Route path="/login" element={<LoginPage />} />
+            <Route
+              path="/login"
+              element={
+                <LoginPage form={<LoginForm setAvatarURL={setAvatarURL} />} />
+              }
+            />
             <Route path="/topup" element={<TopUpPage />} />
-            <Route path="/account" element={<AccountPage />} />
+            <Route
+              path="/account"
+              element={
+                <AccountPage
+                  avatarURL={avatarURL}
+                  setAvatarURL={setAvatarURL}
+                />
+              }
+            />
             <Route
               path="/wallet"
               element={

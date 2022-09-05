@@ -4,7 +4,6 @@ import React, { useContext, useState } from "react";
 import { auth, database } from "../firebase";
 
 const UserContext = React.createContext();
-let prevSnapshot = {};
 
 export const UserContextProvider = (props) => {
   const [userInfo, setUserInfo] = useState({
@@ -24,9 +23,8 @@ export const UserContextProvider = (props) => {
   const userInfoRef = ref(database, "users/" + userInfo.userId + "/username");
 
   onValue(userInfoRef, (snapshot) => {
-    console.log(snapshot.val());
-    if (snapshot.val() && userInfo.username !== snapshot.val) {
-      prevSnapshot = snapshot.val();
+    console.log(snapshot.val(), userInfo.username);
+    if (snapshot.exists() && userInfo.username !== snapshot.val()) {
       setUserInfo({
         ...userInfo,
         username: snapshot.val(),

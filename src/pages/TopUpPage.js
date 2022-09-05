@@ -27,6 +27,7 @@ const TopUpPage = () => {
   const userContext = useUserContext();
   const navigate = useNavigate();
 
+  //to prevent user manual typing in address bar
   if (!userContext.email) {
     return navigate("/");
   }
@@ -57,6 +58,8 @@ const TopUpPage = () => {
     //success message
     setOpenSnackBar(true);
     setSnackBarMessage("You have successfully topped up funds!");
+    setCurrency(null);
+    setTopUpAmount(null);
   };
 
   return (
@@ -121,7 +124,6 @@ const TopUpPage = () => {
             )}
           />
           <StyledTextField
-            value={topUpAmount}
             onChange={(event) => {
               setTopUpAmount(event.target.value);
               console.log(topUpAmount);

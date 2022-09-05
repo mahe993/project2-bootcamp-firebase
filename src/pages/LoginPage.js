@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import React from "react";
-import LoginForm from "../components/LoginForm";
 import HomeButton from "../components/HomeButton";
 
 const LoginPage = (props) => {
@@ -14,7 +13,7 @@ const LoginPage = (props) => {
       alignItems={"center"}
       justifyContent={"space-between"}
     >
-      <LoginForm />
+      {props.form}
       <HomeButton />
     </Box>
   );

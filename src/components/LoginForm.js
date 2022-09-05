@@ -1,3 +1,4 @@
+/* eslint-disable default-case */
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "@emotion/styled";
@@ -5,7 +6,7 @@ import { Alert, Box, InputAdornment, TextField } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { auth, database } from "../firebase";
+import { auth, database, storage } from "../firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -15,6 +16,7 @@ import RegisterDialog from "./RegisterDialog";
 import Snackbar from "@mui/material/Snackbar";
 import { ref, update } from "firebase/database";
 import { useNavigate } from "react-router-dom";
+import { getDownloadURL, ref as storageRef } from "firebase/storage";
 
 const LoginForm = (props) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -61,6 +63,32 @@ const LoginForm = (props) => {
           email: userCredential.user.email,
           wallet: { SGD: 0 },
         });
+        //get profile pic
+        getDownloadURL(
+          storageRef(storage, `users/${userCredential.user.uid}/profilePic.jpg`)
+        )
+          .then((url) => {
+            console.log("download url :", url);
+            props.setAvatarURL(url);
+          })
+          .catch((error) => {
+            // A full list of error codes is available at
+            // https://firebase.google.com/docs/storage/web/handle-errors
+            switch (error.code) {
+              case "storage/object-not-found":
+                // File doesn't exist
+                break;
+              case "storage/unauthorized":
+                // User doesn't have permission to access the object
+                break;
+              case "storage/canceled":
+                // User canceled the upload
+                break;
+              case "storage/unknown":
+                // Unknown error occurred, inspect the server response
+                break;
+            }
+          });
         //Navigate to home page
         navigate("/");
       })

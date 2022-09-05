@@ -33,6 +33,7 @@ const WalletPage = (props) => {
     setValue(newValue);
   };
 
+  //to prevent user manual typing in address bar
   if (!userContext.email) {
     return navigate("/");
   }
