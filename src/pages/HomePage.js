@@ -175,6 +175,7 @@ const HomePage = (props) => {
               onClick={() => {
                 setDisableGetRates(true);
                 setDisableFields(false);
+                props.setExchangeRate(null);
               }}
             >
               Convurt Another

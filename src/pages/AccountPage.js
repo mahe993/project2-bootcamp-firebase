@@ -27,6 +27,7 @@ const AccountPage = (props) => {
       setUsernameValue(
         userContext.username ? userContext.username : userContext.email
       );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //to prevent user manual typing in address bar
@@ -38,9 +39,14 @@ const AccountPage = (props) => {
   const handleProfilePic = (e) => {
     e.preventDefault();
     console.log(e.target.value);
+    // const metadata = {
+    //   contentType: "image/jpeg",
+    // };
+
     const uploadTask = uploadBytesResumable(
       storageRef(storage, `users/${userContext.userId}/profilePic.jpg`),
       e.target.value
+      // metadata
     );
     uploadTask.on(
       "state_changed",
