@@ -45,7 +45,7 @@ const AccountPage = (props) => {
 
     const uploadTask = uploadBytesResumable(
       storageRef(storage, `users/${userContext.userId}/profilePic.jpg`),
-      e.target.value
+      e.target.files[0]
       // metadata
     );
     uploadTask.on(
